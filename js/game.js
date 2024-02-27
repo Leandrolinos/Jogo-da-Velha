@@ -1,6 +1,8 @@
 const board = document.getElementById('board');
 let currentPlayer = 'X';
 let gameBoard = ['', '', '', '', '', '', '', '', ''];
+const resetButton = document.getElementById('resetButton');
+
 
 function createCell(index) {
     const cell = document.createElement('div');
@@ -52,5 +54,13 @@ function checkWinner() {
         gameBoard[pattern[1]] === gameBoard[pattern[2]]
     );
 }
+function resetGame() {
+    gameBoard = ['', '', '', '', '', '', '', '', ''];
+    currentPlayer = 'X';
+    renderBoard();
+}
+
+resetButton.addEventListener('click', resetGame);
+
 
 renderBoard();
