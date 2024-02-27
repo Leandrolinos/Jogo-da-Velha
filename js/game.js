@@ -1,8 +1,14 @@
 const board = document.getElementById('board');
+const resetButton = document.getElementById('resetButton');
+const scoreXElement = document.getElementById('scoreX');
+const scoreOElement = document.getElementById('scoreO');
+const scoreDrawsElement = document.getElementById('scoreDraws');
+
 let currentPlayer = 'X';
 let gameBoard = ['', '', '', '', '', '', '', '', ''];
-const resetButton = document.getElementById('resetButton');
-
+let scoreX = 0;
+let scoreO = 0;
+let scoreDraws = 0;
 
 function createCell(index) {
     const cell = document.createElement('div');
@@ -27,9 +33,14 @@ function handleCellClick(event) {
         gameBoard[index] = currentPlayer;
         renderBoard();
         if (checkWinner()) {
+            updateScore();
             alert(`Player ${currentPlayer} venceu!`);
+            resetGame();
         } else if (!gameBoard.includes('')) {
+            scoreDraws++;
+            updateScore();
             alert('Empate!');
+            resetGame();
         } else {
             currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
         }
@@ -54,11 +65,27 @@ function checkWinner() {
         gameBoard[pattern[1]] === gameBoard[pattern[2]]
     );
 }
+
 function resetGame() {
     gameBoard = ['', '', '', '', '', '', '', '', ''];
-    currentPlayer = 'X';
     renderBoard();
 }
+
+function updateScore() {
+    if (checkWinner()) {
+        if (currentPlayer === 'X') {
+            scoreX++;
+            scoreXElement.textContent = scoreX;
+        } else {
+            scoreO++;
+            scoreOElement.textContent = scoreO;
+        }
+    } else if (!gameBoard.includes('')) {
+        scoreDraws++;
+        scoreDrawsElement.textContent = scoreDraws;
+    }
+}
+
 
 resetButton.addEventListener('click', resetGame);
 
