@@ -47,6 +47,7 @@ function handleCellClick(event) {
     }
 }
 
+
 function checkWinner() {
     const winPatterns = [
         [0, 1, 2],
